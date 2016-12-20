@@ -42,7 +42,22 @@
 #
 # Copyright 2016 Your name here, unless otherwise noted.
 #
-class pe_repo_posix_regexp_fix {
+class pe_repo_posix_regexp_fix(
+    $force_patch = false
+) {
 
-
+  if $pe_server_version == '2016.4.2' or $force_patch {
+    # Affected template is on the system in 2x locations:
+    # 1. used to configure the master: /opt/puppetlabs/puppet/modules/pe_repo/templates/partials/shared_functions.bash.erb
+    # 2. used during system (re)installation: /opt/puppetlabs/server/data/enterprise/modules/pe_repo/templates/partials/shared_functions.bash.erb
+    file { '/opt/puppetlabs/puppet/modules/pe_repo/templates/partials/shared_functions.bash.erb':
+      ensure  => file,
+      owner   => 'root',
+      group   => 'root',
+      mode    => '0755',
+      source  => 'puppet:///modules/pe_repo_posix_regexp_fix/shared_functions_bash_erb',
+    }
+  } else {
+    warning("Refusing to apply outdated patch from pe_repo_posix_regexp_fix for PE-18976, set force_patch true if you want override this warning and apply anyway")
+  }
 }

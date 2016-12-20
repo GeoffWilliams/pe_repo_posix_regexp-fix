@@ -13,6 +13,7 @@
 1. [Development - Guide for contributing to the module](#development)
 
 ## Description
+Addresses PE-18976 by replacing a non-POSIX regexp in the templates used to generate the BASH installations scripts on AIX and Solaris.
 
 Start with a one- or two-sentence summary of what the module does and/or what
 problem it solves. This is your 30-second elevator pitch for your module.

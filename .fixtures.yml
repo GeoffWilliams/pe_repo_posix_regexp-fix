@@ -1,0 +1,7 @@
+fixtures:
+  forge_modules:
+    puppet_enterprise:
+      repo: 'geoffwilliams-puppet_enterprise'
+      ref: '0.5.3'
+  symlinks:
+    "pe_repo_posix_regexp_fix": "#{source_dir}"
