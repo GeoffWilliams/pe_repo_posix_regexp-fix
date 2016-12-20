@@ -1,3 +1,4 @@
+[![Build Status](https://travis-ci.org/GeoffWilliams/pe_repo_posix_regexp_fix.svg?branch=master)](https://travis-ci.org/GeoffWilliams/pe_repo_posix_regexp_fix)
 # pe_repo_posix_regexp_fix
 
 #### Table of Contents
