@@ -14,72 +14,55 @@
 1. [Development - Guide for contributing to the module](#development)
 
 ## Description
-Addresses PE-18976 by replacing a non-POSIX regexp in the templates used to generate the BASH installations scripts on AIX and Solaris.
-
-Start with a one- or two-sentence summary of what the module does and/or what
-problem it solves. This is your 30-second elevator pitch for your module.
-Consider including OS/Puppet version it works with.
-
-You can give more descriptive information in a second paragraph. This paragraph
-should answer the questions: "What does this module *do*?" and "Why would I use
-it?" If your module has a range of functionality (installation, configuration,
-management, etc.), this is the time to mention it.
+Addresses PE-18976 by replacing a non-POSIX regexp in the templates used to generate the BASH installations across multiple Puppet Enterprise supported platforms, of note: AIX and Solaris.
 
 ## Setup
 
-### What pe_repo_posix_regexp_fix affects **OPTIONAL**
+### What pe_repo_posix_regexp_fix affects
 
-If it's obvious what your module touches, you can skip this section. For
-example, folks can probably figure out that your mysql_instance module affects
-their MySQL instances.
+Replaces the template file at `/opt/puppetlabs/puppet/modules/pe_repo/templates/partials/shared_functions.bash.erb` with a static file shipped inside this module.
 
-If there's more that they should know about, though, this is the place to mention:
+This resolves the error 'Unable to interpret argument:...' when script arguments such as agent:certname are used on non-GNU operating systems.
 
-* A list of files, packages, services, or operations that the module will alter,
-  impact, or execute.
-* Dependencies that your module automatically installs.
-* Warnings or other important notices.
 
-### Setup Requirements **OPTIONAL**
-
-If your module requires anything extra before setting up (pluginsync enabled,
-etc.), mention it here.
-
-If your most recent release breaks compatibility or requires particular steps
-for upgrading, you might want to include an additional "Upgrading" section
-here.
-
-### Beginning with pe_repo_posix_regexp_fix
-
-The very basic steps needed for a user to get the module up and running. This
-can include setup steps, if necessary, or it can be an example of the most
-basic use of the module.
 
 ## Usage
 
-This section is where you describe how to customize, configure, and do the
-fancy stuff with your module here. It's especially helpful if you include usage
-examples and code samples for doing things with your module.
+Probably the simplest way to use this module is to create a classification group matching all Puppet Enterprise master nodes and then include the `pe_repo_posix_regexp_fix` class.  When the module is no longer needed - eg due to a new version of Puppet Enterprise, remove the classification group, and then optionally the module.  
+
+You may then proceed to upgrade the system, which will replace the template at `/opt/puppetlabs/puppet/modules/pe_repo/templates/partials/shared_functions.bash.erb` with the shipped fix.
+
+Alternatively, the following code snipits can be added to your roles and profiles as required.
+
+### Fix the installation script to use a POSIX compatible regexp
+
+```puppet
+include pe_repo_posix_regexp_fix
+```
+
+### Force patch application on versions of Puppet Enterprise != 2016.4.2
+```
+```puppet
+class { 'pe_repo_posix_regexp_fix':
+  force_patch => true.
+}
+```
+_Please be careful with this option_
 
 ## Reference
 
-Here, include a complete list of your module's classes, types, providers,
-facts, along with the parameters for each. Users refer to this section (thus
-the name "Reference") to find specific details; most users don't read it per
-se.
+### Classes
+* `pe_repo_posix_regexp_fix` Patch the .erb template with a POSIX regexp
+
+### Files
+* `shared_functions.bash.erb` File containing fixed regexp to install onto the system.  Obtained from `/opt/puppetlabs/puppet/modules/pe_repo/templates/partials/shared_functions.bash.erb` on a regular Puppet Enterprise master.  The fix involves reverting this [commit](https://github.com/puppetlabs/puppetlabs-pe_repo/commit/3d0ab2d46d14ef8815623853dbb165b9ebf8ca1a)
 
 ## Limitations
 
-This is where you list OS compatibility, version compatibility, etc. If there
-are Known Issues, you might want to include them under their own heading here.
+* This module only works with Puppet Enterprise 2016.4.2 as it is expected that later versions will resolve this issue
+* The `pe_repo_posix_regexp_fix` class has a `force_patch` parameter that can be used to force installation on subsequent version of puppet if the fix slips from next version.  
+* If using the `force_patch` parameter, be sure to understand that it will completely replace the target `.erb` file.  It's recommended to inspect for difference carefully using the diff command before attempting to force patching.
 
 ## Development
 
-Since your module is awesome, other users will want to play with it. Let them
-know what the ground rules for contributing are.
-
-## Release Notes/Contributors/Etc. **Optional**
-
-If you aren't using changelog, put your release notes here (though you should
-consider using changelog). You can also add any additional sections you feel
-are necessary or important to include here. Please use the `## ` header.
+This module is a customer hotfix and as such, is not actively maintained.

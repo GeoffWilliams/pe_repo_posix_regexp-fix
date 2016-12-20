@@ -1,6 +1,6 @@
 {
   "name": "geoffwilliams-pe_repo_posix_regexp_fix",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "author": "geoffwilliams",
   "summary": "fix regexps in pe_repo's install scripts for aix and solaris to avoid installation failure",
   "license": "Apache-2.0",
