@@ -1,0 +1,15 @@
+{
+  "name": "geoffwilliams-pe_repo_posix_regexp_fix",
+  "version": "0.1.0",
+  "author": "geoffwilliams",
+  "summary": "fix regexps in pe_repo's install scripts for aix and solaris to avoid installation failure",
+  "license": "Apache-2.0",
+  "source": "https://github.com/GeoffWilliams/pe_repo_posix_regexp_fix",
+  "project_page": "https://github.com/GeoffWilliams/pe_repo_posix_regexp_fix",
+  "issues_url": "https://github.com/GeoffWilliams/pe_repo_posix_regexp_fix/issues",
+  "dependencies": [
+    {"name":"puppetlabs-stdlib","version_requirement":">= 1.0.0"}
+  ],
+  "data_provider": null
+}
+
