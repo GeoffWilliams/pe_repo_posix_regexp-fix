@@ -52,10 +52,10 @@ class pe_repo_posix_regexp_fix(
     # 2. used during system (re)installation: /opt/puppetlabs/server/data/enterprise/modules/pe_repo/templates/partials/shared_functions.bash.erb
     file { '/opt/puppetlabs/puppet/modules/pe_repo/templates/partials/shared_functions.bash.erb':
       ensure  => file,
-      owner   => 'root',
-      group   => 'root',
-      mode    => '0755',
-      source  => 'puppet:///modules/pe_repo_posix_regexp_fix/shared_functions_bash_erb',
+      owner   => 'pe-puppet',
+      group   => 'pe-puppet',
+      mode    => '0644',
+      source  => 'puppet:///modules/pe_repo_posix_regexp_fix/shared_functions.bash.erb',
     }
   } else {
     warning("Refusing to apply outdated patch from pe_repo_posix_regexp_fix for PE-18976, set force_patch true if you want override this warning and apply anyway")
